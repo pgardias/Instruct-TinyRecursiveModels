@@ -1,0 +1,51 @@
+defaults:
+  - arch: trm
+  - _self_
+
+hydra:
+  output_subdir: null
+
+dataset:
+  data_dir: data/slimorca
+  subset_size: 1000
+  seq_len: 512
+  tokenizer_path: ${oc.env:LLAMA_TOKENIZER,tokenizers/llama-32k/tokenizer.model}
+  test_ratio: 0.05
+  seed: 0
+
+arch:
+  puzzle_emb_ndim: 0
+  puzzle_emb_len: 0
+  causal: true
+
+global_batch_size: 32
+epochs: 1
+eval_interval: 1
+
+lr: 1.0e-4
+lr_min_ratio: 0.1
+lr_warmup_steps: 100
+
+weight_decay: 0.1
+beta1: 0.9
+beta2: 0.95
+
+puzzle_emb_lr: 0.0
+puzzle_emb_weight_decay: 0.0
+
+project_name: null
+run_name: null
+load_checkpoint: null
+checkpoint_path: null
+
+checkpoint_every_eval: false
+eval_save_outputs: []
+
+seed: 0
+min_eval_interval: 0
+
+ema: false
+ema_rate: 0.999
+freeze_weights: false
+
+dataloader_workers: 2
