@@ -62,3 +62,17 @@ Adjust the subset, split, or `dataset.test_ratio` overrides if the held-out part
 ---
 
 For ARC or other original-task workflows, use the commands outlined in the preserved upstream README.
+
+## Dataset Scale & Runtime Estimates
+
+Timings below assume a single Ampere-class GPU with `global_batch_size=48`, `seq_len=512`, `dataloader_workers=0`, and `DISABLE_COMPILE=1`.
+
+| Dataset / Schedule | Approx. Examples | Relationship | 1-Epoch Runtime (h) | GPU-hours |
+| --- | --- | --- | --- | --- |
+| SlimOrca | ~5.2×10<sup>5</sup> | Curated subset of OpenOrca | ≈4.5 (measured) | ≈4.5 |
+| OpenOrca (full) | ~9.7×10<sup>6</sup> | Superset containing SlimOrca | ≈84<sup>†</sup> | ≈84 |
+| SlimOrca → OpenOrca (sequential) | ~1.0×10<sup>7</sup> combined | SlimOrca warm-start followed by one OpenOrca epoch | ≈88.5<sup>†</sup> | ≈88.5 |
+
+<sup>†</sup>Estimated by scaling the measured SlimOrca throughput linearly with example count; actual times change with hardware, I/O, or hyperparameter tweaks.
+
+SlimOrca is a high-quality subset of the OpenOrca corpus and is practical for single-GPU experimentation. Full OpenOrca requires multi-day runs unless you distribute training or adopt staged curricula (e.g., SlimOrca pretraining followed by sampled OpenOrca shards).
