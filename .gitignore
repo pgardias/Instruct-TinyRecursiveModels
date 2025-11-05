@@ -1,0 +1,35 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.so
+
+# Editor and OS artifacts
+.DS_Store
+.idea/
+.vscode/
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# Checkpoints, logs, datasets
+checkpoints/
+outputs/
+wandb/
+data/
+tokenizers/
+
+# CUDA installers and wheels
+*.deb
+*.whl
+
+# Hydra / experiment artifacts
+multirun/
+outputs.log
+
+# Compiled binaries
+build/
+dist/
+
