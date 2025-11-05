@@ -1,4 +1,4 @@
-# TinyRecursiveModels – Instruction Tuning Add-On
+# TinyRecursiveModels – Instruction Tuning
 
 This repository layers SlimOrca-style instruction tuning and inference workflows on top of the original [TinyRecursiveModels](docs/TINYRECURSIVEMODELS_README.md) project. Everything in the upstream codebase remains available; we add lightweight dataset plumbing, training scripts, and CLIs geared toward conversational supervision.
 
@@ -61,4 +61,4 @@ Adjust the subset, split, or `dataset.test_ratio` overrides if the held-out part
 
 ---
 
-For ARC or other original-task workflows, continue using the commands outlined in the preserved upstream README. This add-on focuses solely on the instruction-tuning path. Contributions welcome!
+For ARC or other original-task workflows, use the commands outlined in the preserved upstream README.
