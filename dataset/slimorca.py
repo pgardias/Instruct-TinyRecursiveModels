@@ -244,6 +244,18 @@ class SlimOrcaDataset(Dataset):
             pad_token_id=self.pad_id,
         )
 
+        # Shift assistant tokens so the model predicts them autoregressively.
+        original_ids = list(input_ids)
+        input_ids = list(input_ids)
+        labels = list(labels)
+        attention_mask = list(attention_mask)
+        for idx, label in enumerate(labels):
+            if label == IGNORE_LABEL_ID:
+                continue
+            if idx == 0:
+                continue
+            input_ids[idx] = original_ids[idx - 1]
+
         return {
             "inputs": torch.tensor(input_ids, dtype=torch.long),
             "labels": torch.tensor(labels, dtype=torch.long),

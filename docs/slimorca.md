@@ -20,6 +20,7 @@ This repository layer extends TinyRecursiveModels with a SlimOrca-based instruct
 ## Data Loading
 
 - `dataset/slimorca.py` downloads (or reuses) `SlimOrca.jsonl`, tokenizes conversations in-memory with the LLaMA-32k SentencePiece model, and now surfaces a `tqdm` progress bar while tokenizing. The bar always shows a true denominator; we removed previous caching so it recomputes counts per run.
+- Assistant supervision is now autoregressive: the loader replaces each assistant token in the input with the preceding token so the model must predict the actual assistant text rather than copy it. Labels still target the true assistant tokens only.
 - Set `dataset.data_dir=data/slimorca_full` and `dataset.subset_size=null` to consume the full 518k example corpus. For small-scale tests, override `dataset.subset_size`.
 - Use `dataloader_workers=0` when training on a single GPU under WSL/Windows to avoid duplicated dataset copies and SSD thrash.
 

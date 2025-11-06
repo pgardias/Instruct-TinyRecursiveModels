@@ -8,6 +8,7 @@ This repository layers SlimOrca-style instruction tuning and inference workflows
 
 - [`docs/TINYRECURSIVEMODELS_README.md`](docs/TINYRECURSIVEMODELS_README.md) – original project README preserved verbatim for reference.
 - [`docs/slimorca.md`](docs/slimorca.md) – decisions and best practices for using the SlimOrca pipeline (dataset loading, training recommendations, inference tips).
+- [`docs/instruct_training.md`](docs/instruct_training.md) – step-by-step instruction training playbook and an example SlimOrca run.
 - [`AGENTS.md`](AGENTS.md) – running notes from prior automation passes (contains troubleshooting breadcrumbs and historical context).
 
 ## Quick Commands
@@ -58,6 +59,20 @@ python inference_instruct.py \
 ```
 
 Adjust the subset, split, or `dataset.test_ratio` overrides if the held-out partition is empty. Saved tensors land next to the specified checkpoint directory.
+
+### Single Message Generation
+
+```bash
+DISABLE_COMPILE=1 \
+python generate_instruct.py \
+  --checkpoint checkpoints/SlimOrca-ACT/<run_name>/step_<N> \
+  --message "Explain how recursion works in simple terms." \
+  --tokenizer-path tokenizers/llama-32k/tokenizer.model
+```
+
+The script mirrors SlimOrca’s conversation template (system prompt + user + assistant) and prints the generated assistant reply. Use `--overrides` for custom Hydra overrides (e.g., sequence length), `--max-output-tokens` to adjust the length cap (defaults to half of `seq_len`), and `-V/--verbose` to inspect greedy decoding steps with top token probabilities.
+
+> Checkpoints trained prior to the autoregressive shift (assistant tokens masked in the inputs) will output nonsensical generations. Retrain with the current code path before using this helper.
 
 ---
 
